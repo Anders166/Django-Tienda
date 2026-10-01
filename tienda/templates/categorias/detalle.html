@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<h2>{{ categoria.nombre }}</h2>
+<p><strong>Descripción:</strong> {{ categoria.descripcion|default:"Sin descripción" }}</p>
+
+<p class="acciones">
+    <a class="btn" href="{% url 'editar_categoria' categoria.pk %}">Editar</a>
+    <a class="btn btn-rojo" href="{% url 'eliminar_categoria' categoria.pk %}">Eliminar</a>
+    <a class="btn btn-gris" href="{% url 'lista_categorias' %}">Volver al listado</a>
+</p>
+
+<h3>Productos de esta categoría</h3>
+{% if productos %}
+<table>
+    <thead>
+        <tr><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Estado</th></tr>
+    </thead>
+    <tbody>
+        {% for p in productos %}
+        <tr>
+            <td>{{ p.nombre }}</td>
+            <td>${{ p.precio }}</td>
+            <td>{{ p.cantidad }}</td>
+            <td>{% if p.estado %}<span class="activo">Activo</span>{% else %}<span class="inactivo">Inactivo</span>{% endif %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="vacio">Esta categoría todavía no tiene productos.</p>
+{% endif %}
+{% endblock %}

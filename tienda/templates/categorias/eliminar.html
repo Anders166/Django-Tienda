@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<h2>Eliminar categoría</h2>
+
+{% if error %}
+<p class="vacio">{{ error }}</p>
+<a class="btn btn-gris" href="{% url 'detalle_categoria' categoria.pk %}">Volver</a>
+{% else %}
+<p>¿Seguro que deseas eliminar la categoría <strong>{{ categoria.nombre }}</strong>?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-rojo">Sí, eliminar</button>
+    <a class="btn btn-gris" href="{% url 'lista_categorias' %}">Cancelar</a>
+</form>
+{% endif %}
+{% endblock %}

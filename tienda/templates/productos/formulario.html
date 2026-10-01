@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<h2>Registrar producto</h2>
+
+{% if not form.fields.categoria.queryset.exists %}
+<p class="vacio">Primero debes <a href="{% url 'crear_categoria' %}">registrar una categoría</a>.</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {% for campo in form %}
+    <div class="form-campo">
+        {{ campo.label_tag }}
+        {{ campo }}
+        {% for error in campo.errors %}
+            <div class="error">{{ error }}</div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn">Guardar</button>
+    <a class="btn btn-gris" href="{% url 'lista_productos' %}">Volver al listado</a>
+</form>
+{% endblock %}

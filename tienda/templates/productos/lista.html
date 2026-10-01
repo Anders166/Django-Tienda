@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<a class="btn" href="{% url 'crear_producto' %}">Registrar producto</a>
+
+{% if productos %}
+<table>
+    <thead>
+        <tr><th>Producto</th><th>Categoría</th><th>Precio</th><th>Cantidad</th><th>Estado</th></tr>
+    </thead>
+    <tbody>
+        {% for p in productos %}
+        <tr>
+            <td>{{ p.nombre }}</td>
+            <td><a href="{% url 'detalle_categoria' p.categoria.pk %}">{{ p.categoria.nombre }}</a></td>
+            <td>${{ p.precio }}</td>
+            <td>{{ p.cantidad }}</td>
+            <td>
+                {% if p.estado %}<span class="activo">Activo</span>
+                {% else %}<span class="inactivo">Inactivo</span>{% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="vacio">Todavía no hay productos registrados.</p>
+{% endif %}
+{% endblock %}
